@@ -12,6 +12,10 @@ from pathlib import Path
 # -- Build environment -----------------------------------------------------
 on_rtd = os.environ.get("READTHEDOCS", None) == "True"
 
+# -- Project information -----------------------------------------------------
+description = "Site web minimaliste pour description association parents d'élève Collège Louis Guilloux et Lycée Jean Cassin à Montfort sur Meu"
+project = "Association parents d'élève Collège Louis Guilloux et Lycée Jean Cassin à Montfort sur Meu"
+
 # -- General configuration ---------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
