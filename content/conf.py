@@ -9,17 +9,8 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-# project
-from content import __about__
 # -- Build environment -----------------------------------------------------
 on_rtd = os.environ.get("READTHEDOCS", None) == "True"
-
-# -- Project information -----------------------------------------------------
-author = __about__.__author__
-copyright = __about__.__copyright__
-description = __about__.__summary__
-project = __about__.__title__
-version = release = __about__.__version__
 
 # -- General configuration ---------------------------------------------------
 
@@ -159,15 +150,5 @@ myst_enable_extensions = [
 ]
 
 myst_heading_anchors = 3
-
-# replacement variables
-myst_substitutions = {
-    "author": author,
-    "date_update": datetime.now().strftime("%d %B %Y"),
-    "description": description,
-    "repo_url": __about__.__uri__,
-    "title": project,
-    "version": version,
-}
 
 # -- Functions ------------------------------------------------------------------
