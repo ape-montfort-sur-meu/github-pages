@@ -1,0 +1,82 @@
+name: "🚀 Déploiement"
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "content/**/*"
+      - ".github/workflows/deploy.yml"
+
+    tags:
+      - "*"
+
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/deploy.yml"
+      - content/**/*
+      - requirements/deploy.txt
+
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.11"
+
+jobs:
+  deploy:
+    name: "📤 GitHub Pages"
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: "pip"
+          cache-dependency-path: "requirements/*.txt"
+
+      - name: Install deploy requirements
+        run: |
+          python -m pip install -U -r requirements/deploy.txt
+
+      - name: Build static website
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # required to avoid GH API rate limit
+        run: sphinx-build -b html -j auto -d content/_build/cache -q content content/_build/html
+
+      - name: Save build static website as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: content
+          path: content/_build/html/*
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+        if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main')
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main')
+        with:
+          # Upload entire repository
+          path: content/_build/html/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main')
+        uses: actions/deploy-pages@v2
