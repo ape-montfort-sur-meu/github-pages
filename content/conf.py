@@ -86,7 +86,7 @@ html_favicon = "static/logo_fcpe.png"
 html_logo = "static/logo_fcpe.png"
 html_theme = "furo"
 html_theme_options = {
-    "source_repository": __about__.__uri__,
+    "source_repository": "https://github.com/ape-montfort-sur-meu/github-pages",
     "source_branch": "main",
     "source_directory": "content/",
 }
