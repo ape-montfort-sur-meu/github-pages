@@ -155,9 +155,4 @@ myst_enable_extensions = [
 
 myst_heading_anchors = 3
 
-# replacement variables
-myst_substitutions = {
-    "title": "Association parents d'élève Collège Louis Guilloux et Lycée Jean Cassin à Montfort sur Meu"
-}
-
 # -- Functions ------------------------------------------------------------------
