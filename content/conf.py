@@ -10,7 +10,7 @@ from datetime import datetime
 from pathlib import Path
 
 # project
-from sphynx-website import __about__
+from content import __about__
 # -- Build environment -----------------------------------------------------
 on_rtd = os.environ.get("READTHEDOCS", None) == "True"
 
@@ -97,7 +97,7 @@ html_theme = "furo"
 html_theme_options = {
     "source_repository": __about__.__uri__,
     "source_branch": "main",
-    "source_directory": "sphynx-website/",
+    "source_directory": "content/",
 }
 
 
